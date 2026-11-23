@@ -42,3 +42,40 @@ footer strong{color:#f7f0e5}
 .location-consent{display:flex!important;align-items:flex-start;gap:12px;padding:15px!important;margin:16px 0!important;background:#294c40!important;border:1px solid #6b8a79;border-radius:12px;color:#fff!important;font-size:14px!important;line-height:1.45}
 .location-consent input[type="checkbox"]{display:block!important;appearance:auto!important;-webkit-appearance:checkbox!important;width:22px!important;height:22px!important;min-width:22px;margin:1px 0 0!important;padding:0!important;accent-color:#e87945}
 .location-consent label{display:block!important;flex:1;margin:0!important;padding:0!important;color:#fff!important;font-size:14px!important;font-weight:700!important}
+
+/* DailyNest storefront refresh v5 — forest, cream and citrus */
+:root{--green:#103b2d;--mint:#e7efdf;--ink:#18372b;--muted:#718276;--line:#e5dfcf;--bg:#f7f2e7;--accent:#f27a12;--card:#fffaf0}
+body{background:radial-gradient(ellipse at 50% -10%,#e6f0df 0,transparent 38%),var(--bg);color:var(--ink)}
+.top{background:linear-gradient(110deg,#082d21,#124833);border:0;box-shadow:0 8px 28px #092a1d22}
+.brand{color:#fff}.brand small{color:#d0dfd2}.mark{background:#f5eee0;color:#103b2d}
+.top nav button{color:#e2eadf}.top nav button.active{background:#e5eddf;color:#103b2d}
+.cart{background:var(--accent);color:#fff;font-weight:800}.cart b{background:#fff;color:#103b2d}
+main{max-width:1120px}
+.hero{background:linear-gradient(125deg,#fff5df 0%,#dcebdc 100%);border:1px solid #e6dfcf;box-shadow:0 14px 35px #173c2b10}
+.hero h1{color:#103b2d}.hero .cta,.primary,.product-foot button{background:linear-gradient(100deg,#f58a16,#ed5b0a);color:#fff;box-shadow:0 5px 14px #ef781b30}
+.hero-art{background:radial-gradient(circle at 35% 25%,#f8dba5,#c8dfc8 70%);color:#103b2d}
+.section-head h1,.section-head h2{color:#103b2d}
+.product,.panel,.drawer-card{background:#fffaf0;color:#18372b;border-color:#e7dfcf;box-shadow:0 8px 24px #1b3b2910}
+.product{border-radius:18px}.product-body{padding:17px}.product h3{color:#123b2c}
+.product p,.cart-row small,.drawer form small{color:#718276}
+.product-foot strong{color:#e56b12}
+.filters button{background:#fffaf0;color:#52675a;border-color:#e5dfcf}
+.filters button.selected{background:#103b2d;color:#fff;border-color:#103b2d}
+.drawer{background:#082b20cc;backdrop-filter:blur(5px)}
+.drawer-card{background:#fffaf0}
+.drawer-head h2,.drawer form h3,.panel h2{color:#103b2d}
+input,textarea{background:#fffdf7;color:#18372b;border-color:#d9dfd3}
+.location-consent{background:#edf6df!important;border:1px solid #9bc76d!important;color:#143c2b!important;box-shadow:0 4px 14px #6a9c3818}
+.location-consent label{color:#143c2b!important}
+.location-status{color:#718276}
+.success-card{background:#fff8e9;border:1px solid #e9dfc8;box-shadow:0 24px 80px #061b1680}
+.success-card h2{color:#103b2d}.success-symbol{background:#e5f0d9;color:#1b6a3d}
+.order-next-step{display:grid;gap:6px;padding:15px;background:#edf5e4;border:1px solid #cfe1bd;border-radius:12px;color:#19452f;margin-top:16px}
+.order-next-step strong{font-size:16px}.order-next-step span{font-size:13px;line-height:1.5}
+.stats div{background:#e9f0e3}.stats strong{color:#103b2d}
+.notice{background:#fff3d8;color:#72501c;border-color:#efd8a8}
+.demo-tag{background:#fff0d8;color:#9a5b0b}
+.empty{background:#fffaf0;color:#718276}
+footer{color:#718276}footer strong{color:#103b2d}
+#toast{background:#103b2d;color:#fff}
+@media(max-width:700px){.top{background:linear-gradient(110deg,#082d21,#124833)}.hero{border-radius:20px}.drawer-card{background:#fffaf0}}
