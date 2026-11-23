@@ -1,4 +1,40 @@
 const KEY='dailynest_v1';
+// EmailJS order-alert configuration. Replace these three values after creating
+// a Gmail service and DailyNest order template in EmailJS.
+const EMAILJS_CONFIG = {
+  serviceId: 'YOUR_EMAILJS_SERVICE_ID',
+  templateId: 'YOUR_EMAILJS_TEMPLATE_ID',
+  publicKey: 'YOUR_EMAILJS_PUBLIC_KEY',
+  recipient: 'Sangramlapulga@gmail.com'
+};
+async function sendDailyNestOrderEmail(order) {
+  const ready = Object.values(EMAILJS_CONFIG).slice(0,3).every(v => v && !v.startsWith('YOUR_'));
+  if (!ready) return {sent:false, reason:'Email alerts need EmailJS Service ID, Template ID and Public Key.'};
+  if (!window.emailjs) return {sent:false, reason:'Email service did not load. Please try again later.'};
+  const templateParams = {
+    to_email: EMAILJS_CONFIG.recipient,
+    order_id: order.id,
+    order_date: order.date,
+    customer_name: order.customer,
+    customer_phone: order.phone,
+    order_items: order.items.map(x => x.name+' × '+x.qty+' — '+money(x.price*x.qty)).join('\n'),
+    order_total: money(order.total),
+    delivery_address: order.address,
+    latitude: String(order.latitude),
+    longitude: String(order.longitude),
+    gps_accuracy: order.accuracy+' metres',
+    google_maps_link: order.mapsUrl,
+    location_message: 'This order was placed from this location.'
+  };
+  try {
+    await window.emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, templateParams, {publicKey:EMAILJS_CONFIG.publicKey});
+    return {sent:true};
+  } catch (err) {
+    console.error('DailyNest email alert failed', err);
+    return {sent:false, reason:'Email could not be sent. Check EmailJS configuration and template.'};
+  }
+}
+
 const seed=[
 {id:1,name:'Kitchen Storage Organizer',category:'Home',price:249,stock:12,description:'Keep your kitchen organized',image:''},
 {id:2,name:'Microfiber Cleaning Set',category:'Cleaning',price:149,stock:20,description:'Everyday cleaning essentials',image:''},
@@ -33,8 +69,9 @@ let pos;try{pos=await getPosition()}catch(err){$('locationStatus').textContent='
 const c=pos.coords,mapsUrl='https://www.google.com/maps?q='+c.latitude+','+c.longitude;
 const items=entries.map(([id,q])=>{const p=db.products.find(x=>x.id===+id);p.stock-=q;return{name:p.name,price:p.price,qty:q}});
 const order={id:'DN'+Date.now().toString().slice(-8),customer:f.get('customer'),phone:f.get('phone'),address:f.get('address'),latitude:c.latitude,longitude:c.longitude,accuracy:Math.round(c.accuracy),mapsUrl,items,total:items.reduce((n,x)=>n+x.price*x.qty,0),status:'Received',date:new Date().toLocaleString()};
-db.orders.unshift(order);save();cart={};updateCount();renderCart();renderProducts();e.target.reset();$('cartDrawer').hidden=true;switchView('orders');
+db.orders.unshift(order);save();const emailResult=await sendDailyNestOrderEmail(order);cart={};updateCount();renderCart();renderProducts();e.target.reset();$('cartDrawer').hidden=true;switchView('orders');
 $('successDetails').textContent='Order '+order.id+' · '+money(order.total)+' · GPS captured (±'+order.accuracy+' m).';
+$('orderEmailStatus').textContent=emailResult.sent?'An order alert was emailed to DailyNest.':emailResult.reason+' Your order is saved on this device.';
 $('orderSuccess').hidden=false;
 };
 function renderOrders(){$('ordersList').innerHTML=db.orders.length?db.orders.map(o=>`<div class="panel"><div class="order-row"><strong>${esc(o.id)}</strong><span>${esc(o.date)}</span><b>${money(o.total)}</b></div><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join('<br>')}</p><p>${esc(o.address)}</p>${o.mapsUrl?`<p><a href="${esc(o.mapsUrl)}" target="_blank" rel="noopener">View delivery GPS location</a></p>`:''}<span class="demo-tag">${esc(o.status)}</span></div>`).join(''):'<div class="empty">No orders yet. Your orders will appear here.</div>'}
