@@ -34,9 +34,7 @@ const c=pos.coords,mapsUrl='https://www.google.com/maps?q='+c.latitude+','+c.lon
 const items=entries.map(([id,q])=>{const p=db.products.find(x=>x.id===+id);p.stock-=q;return{name:p.name,price:p.price,qty:q}});
 const order={id:'DN'+Date.now().toString().slice(-8),customer:f.get('customer'),phone:f.get('phone'),address:f.get('address'),latitude:c.latitude,longitude:c.longitude,accuracy:Math.round(c.accuracy),mapsUrl,items,total:items.reduce((n,x)=>n+x.price*x.qty,0),status:'Received',date:new Date().toLocaleString()};
 db.orders.unshift(order);save();cart={};updateCount();renderCart();renderProducts();e.target.reset();$('cartDrawer').hidden=true;switchView('orders');
-const msg='NEW DAILYNEST ORDER%0AOrder: '+order.id+'%0ACustomer: '+encodeURIComponent(order.customer)+'%0APhone: '+encodeURIComponent(order.phone)+'%0AAddress: '+encodeURIComponent(order.address)+'%0AItems: '+encodeURIComponent(items.map(x=>x.name+' x '+x.qty).join(', '))+'%0ATotal: '+encodeURIComponent(money(order.total))+'%0AGPS: '+encodeURIComponent(mapsUrl)+'%0AAccuracy: '+order.accuracy+' metres';
 $('successDetails').textContent='Order '+order.id+' · '+money(order.total)+' · GPS captured (±'+order.accuracy+' m).';
-$('whatsappNotify').href='https://wa.me/917064067922?text='+msg;
 $('orderSuccess').hidden=false;
 };
 function renderOrders(){$('ordersList').innerHTML=db.orders.length?db.orders.map(o=>`<div class="panel"><div class="order-row"><strong>${esc(o.id)}</strong><span>${esc(o.date)}</span><b>${money(o.total)}</b></div><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join('<br>')}</p><p>${esc(o.address)}</p>${o.mapsUrl?`<p><a href="${esc(o.mapsUrl)}" target="_blank" rel="noopener">View delivery GPS location</a></p>`:''}<span class="demo-tag">${esc(o.status)}</span></div>`).join(''):'<div class="empty">No orders yet. Your orders will appear here.</div>'}
