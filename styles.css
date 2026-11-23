@@ -37,3 +37,8 @@ footer strong{color:#f7f0e5}
 .close-success{position:absolute;right:12px;top:12px;color:#183c32;background:#e5e0d5}
 .whatsapp-button{display:block;margin-top:20px;background:#1d8b57;color:#fff}
 @media(max-width:700px){.top{background:#0c241f}.product{background:#1b4036}.drawer-card{background:#1b4036}}
+
+/* GPS consent control: high-visibility checkout row */
+.location-consent{display:flex!important;align-items:flex-start;gap:12px;padding:15px!important;margin:16px 0!important;background:#294c40!important;border:1px solid #6b8a79;border-radius:12px;color:#fff!important;font-size:14px!important;line-height:1.45}
+.location-consent input[type="checkbox"]{display:block!important;appearance:auto!important;-webkit-appearance:checkbox!important;width:22px!important;height:22px!important;min-width:22px;margin:1px 0 0!important;padding:0!important;accent-color:#e87945}
+.location-consent label{display:block!important;flex:1;margin:0!important;padding:0!important;color:#fff!important;font-size:14px!important;font-weight:700!important}
